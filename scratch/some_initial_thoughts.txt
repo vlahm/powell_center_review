@@ -1,0 +1,23 @@
+1. run metadata xm through metadata parse: https://geo-nsdi.er.usgs.gov/validation/
+2. scan through all
+3. reread checklist and revisit parts as necessary
+4. read through terms (see below) and see if theres anything surprisingly missing
+
+not necessary because alison used metadata wizard? review doc already says "no fgdc schema errors found"
+
+#terms
+https://www.fgdc.gov/metadata/csdgm
+https://www.fgdc.gov/metadata/csdgm/01.html#Currentness%20Reference
+
+alison:
+it looks like youre following: FGDC Content Standard for Digital Geospatial Metadata
+how will the metadata actually be viewed? rendered into human-readable text like in these word docs? if so, \n\t errors might be worth addressing
+floating comments and edits in the text appropriate?
+
+sites:
+temporal keyword?
+temporal extents?
+
+things to note:
+"all links tested"
+"coordinates verified"
