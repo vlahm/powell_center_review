@@ -27,23 +27,12 @@ extract_from_config = function(key){
 sb_usr = extract_from_config('SB_USER')
 sb_pass = extract_from_config('SB_PASS')
 
-sb_meta_id = extract_from_config('SB_META')
-sb_data_id = extract_from_config('SB_DATA')
-meta_folder = extract_from_config('META_FOLDER')
-data_folder = extract_from_config('UPLOAD_FOLDER')
-
-
 #log in to sciencebase
 authenticate_sb(sb_usr, sb_pass)
 Sys.sleep(5)
 
 
 
-#get vector of metadata filenames on streampulse server
-meta_local = list.files(meta_folder, full.names=TRUE)
-# cat(paste(length(meta_local), 'metadata files on server.\n'))
-write(paste(length(meta_local), 'metadata files on server.'),
-    '../logs_etc/sb_upload.log', append=TRUE)
 
 #get objects in metadata folder on sb
 sb_meta_children = item_list_children('59c03b72e4b091459a5e0b64', fields='id', limit=99999)
@@ -55,16 +44,17 @@ for(i in 1:length(sb_meta_children)){
         insb_meta = append(insb_meta, sb_meta_obj$files[[j]]$name)
         insb_meta = append(insb_meta, sb_meta_obj$files[[1]]$name)
         sb_meta_obj$files
-        item_file_downoad(sb_meta_obj, '~/git/powell_center_review/)
+        tsworkpath = '~/git/powell_center_review/data/ts_data/set'
+        dir.create(paste0(tsworkpath, i))
+        item_file_download(sb_meta_obj, dest_dir=paste0(tsworkpath, i))
+        zip_file = list.files(paste0(tsworkpath, i), pattern='.*zip')
+        unzipped = unzip(zipfile=paste0(tsworkpath, i, '/', zip_file),
+            exdir=paste0(tsworkpath, i))
+
     }
 }
+getwd()
 
-
-attributes_metab_config <- function(
-    zip.file='../4_data_release/cache/models/post/config.zip',
-    attr.file='../4_data_release/in/attr_metab_config.csv') {
-
-    # read in the data file
     unzipped <- unzip(zipfile=zip.file, exdir=file.path(tempdir(), 'config'))
     data_df <- readr::read_tsv(unzipped)
 
